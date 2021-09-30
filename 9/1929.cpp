@@ -6,7 +6,8 @@ int main(){
     int m,n;
     cin >> m>>n;
     bool* arr = new bool[n+1];
-    arr[0],arr[1]=false;
+    arr[0]=false;
+    arr[1]=false;
     for(int i=2;i<n+1;i++){
         arr[i]=true;
     }

@@ -12,7 +12,8 @@ int main(){
         else{
             bool* arr = new bool[2*n+1];
             int count=0;
-            arr[0],arr[1]=false;
+            arr[0]=false;
+            arr[1]=false;
             for(int i=2;i<=2*n;i++){
                 arr[i]=true;
             }
