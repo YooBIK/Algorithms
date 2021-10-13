@@ -12,10 +12,14 @@ int main(){
     }
     int result= arr[0];
     for(int i=1;i<str.length();i++){
-        if(arr[i]==1||arr[i]==0||result<=1){
+        if(arr[i]==1||arr[i]==0){
             result+=arr[i];
         }else{
-            result *=arr[i];
+            if(result==1||result==0){
+                result+=arr[i];
+            }else{
+                result*=arr[i];
+            }
         }
     }
     cout << result;
