@@ -12,9 +12,15 @@ int main(){
         cin >> x;
         vec.push_back(x);
     }
+    int target = 1;
     sort(vec.begin(),vec.end());
     for(int i=0;i<n;i++){
-
-
+        if(target<vec[i]){
+            break;
+        }
+        target+=vec[i];        
     }
+    cout << target;
+    return 0;
+
 }
