@@ -3,9 +3,12 @@ using namespace std;
 int map[50][50];
 int route[50][50];
 
+int dx[4] = {-1, 0, 1, 0};
+int dy[4] = {0, 1, 0, -1};
+
 int main(){
     int n,m;
-    cin >> n >> m; // n = row , m= col
+    cin >> n >> m;
     int row,col,dir;
     cin >> row >> col >> dir;
     for(int i=0;i<n;i++){
@@ -22,25 +25,10 @@ int main(){
         }else{
             dir--;
         }
-        int newrow,newcol;
-        switch(dir){
-            case 0:
-                newrow = row--; 
-                break;         
-            case 1:
-                newcol = col++;
-                break;
-            case 2:
-                newrow = row++;
-                break;
-            case 3:
-                newcol = col--;
-                break;
-            default:
-                break;
-        }
+        int newrow = row + dx[dir];
+        int newcol = col + dy[dir];        
         if(map[newrow][newcol]==0&&route[newrow][newcol]==0){
-            route[row][col]=1;
+            route[newrow][newcol]=1;
             row = newrow;
             col = newcol;
             result++;
@@ -51,22 +39,8 @@ int main(){
             turn++;
         }
         if(turn==4){
-            switch(dir){
-                case 0:
-                    newrow = row++; 
-                    break;         
-                case 1:
-                    newcol = col--;
-                    break;
-                case 2:
-                    newrow = row--;
-                    break;
-                case 3:
-                    newcol = col++;
-                    break;
-                default:
-                    break;
-            }
+            newrow = row - dx[dir];
+            newcol = col - dy[dir];  
             if(map[newrow][newcol]==0){
                 row = newrow;
                 col = newcol;
