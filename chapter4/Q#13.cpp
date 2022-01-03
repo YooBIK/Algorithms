@@ -5,6 +5,11 @@
 using namespace std;
 
 int arr[50][50];
+vector<pair<int,int>> chicken;
+vector<pair<int,int>> house;
+
+
+
 
 int main(){
     int n,m;
@@ -12,11 +17,16 @@ int main(){
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             cin >> arr[i][j];
+            if(arr[i][j]==1){
+                house.push_back({i,j});
+            }
+            else if(arr[i][j]==2){
+                chicken.push_back({i,j});
+            }
         }
     }
     int c_count=0;
-    vector<pair<int,int>> chicken;
-    vector<pair<int,int>> house;
+
     for(int i=0;i<n;i++){
         for(int j=0;j<n;j++){
             if(arr[i][j]==2){
