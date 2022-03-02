@@ -17,7 +17,7 @@ void bfs(int x){
     while(!q.empty()){
         int a = q.front();
         q.pop();
-        for(int i=1;i<=1000;i++){
+        for(int i=1;i<=n;i++){
             if(map[a][i]==1 && visit[i]==0){
                 q.push(i);
                 visit[i]=1;
@@ -35,12 +35,10 @@ int main(){
         map[a][b] = 1;
         map[b][a] = 1;
     }
-    for(int i=1;i<=1000;i++){
-        for(int j=1;j<=1000;j++){
-            if(map[i][j]==1 && visit[j]==0){
-                bfs(j);
-                count++;
-            }
+    for(int i=1;i<=n;i++){
+        if(visit[i]==0){
+            bfs(i);
+            count++;
         }
     }
     cout << count;
