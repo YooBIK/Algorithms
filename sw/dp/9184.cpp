@@ -24,7 +24,6 @@ int w(int a, int b, int c){
             return arr[a][b][c];
         }
     }
-
 }
 
 int main(){
