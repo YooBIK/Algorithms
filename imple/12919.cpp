@@ -1,49 +1,40 @@
 #include <iostream>
-#include <string>
-#include <vector>
 #include <algorithm>
+#include <string>
 using namespace std;
 
-vector<string> vec;
-vector<string> result;
-int check[100] = {0,};
+string S,T;
 
-bool cmp(string a, string b){
-    return a.compare(b) <0;
-}
 
-string min_str(){
-    sort(vec.begin(),vec.end(),cmp);
-    string min_val = vec[0];
-    vec.clear();
-    return min_val;
+
+void check_is_posible(string str){
+    if(str.compare(S)==0){
+        cout<<1;
+        exit(0);
+    }
+    if(str.size() <= S.size()){
+        return;
+    }
+
+    if(str[str.size()-1]=='A'){
+        string temp = str;
+        temp.erase(temp.size()-1);
+        check_is_posible(temp);
+    }
+
+    if(str[0]=='B'){
+        string temp = str;
+        reverse(temp.begin(),temp.end());
+        temp.erase(temp.size()-1);
+        check_is_posible(temp);
+    }
 }
 
 int main(){
 
-    string str;
-    cin >> str;
-    string temp1 = str;
-    result.push_back(str);
-    while(1){
-        string temp2 = temp1;
-        for(int i=0;i<temp2.length();i++){
-            char c = temp2[i];
-            temp2.erase(temp2.begin()+i);
-            vec.push_back(temp2);
-            temp2.insert(temp2.begin()+i,c);
-        }
-        temp1=min_str();     
-        if(temp1.length()==0){
-            break;
-        }else{
-            result.push_back(temp1);
-            
-        }
-    }
-
-    for(int i=result.size()-1;i>=0;i--){
-        cout << result[i] << "\n";
-    }
+    cin >> S >> T;
+    check_is_posible(T);
+    cout << 0;
     return 0;
+
 }
