@@ -13,12 +13,10 @@ int dir_y[4] = {0,1,0,-1};
 
 queue<pair<int,int>> human_q;
 queue<pair<int,int>> fire_q;
-vector<int> answer;
-int result = 0;
+
 
 
 void init(){
-    result = 0;
     for(int i=0;i<1001;i++){
         map[i].clear();
         for(int j=0;j<1001;j++){
@@ -29,58 +27,79 @@ void init(){
     while(!fire_q.empty()) fire_q.pop();
 }
 
-void bfs(int x, int y){
-    cnt[x][y] =1;
-    human_q.push({x,y});
+int bfs(int row, int col){
+    int flag = 0;
+    cnt[row][col] =1;
+    human_q.push({row,col});
     while(!human_q.empty()){
-        int x1 = human_q.front().first;
-        int y1 = human_q.front().second;
-        human_q.pop();
-        if(x1 == 0 || x1 == w || y1 == 0 || y1 == h){
-            result = cnt[x1][y1];
-            break;
-        }
-        
-        for(int i=0;i<fire_q.size();i++){
-            for(int i=0;i<4;i++){
-                int fire_nx = fire_q.front().first + dir_x[i];
-                int fire_ny = fire_q.front().second + dir_y[i];
-                fire_q.pop();
-                if(fire_nx>=0 && fire_nx <= w && fire_ny >=0 && fire_ny <= h && map[fire_nx][fire_ny] != '#'){
-                    map[fire_nx][fire_ny] = '*';
-                    fire_q.push({fire_nx,fire_ny});
+        int fire_q_size = fire_q.size();
+        for(int i=0;i<fire_q_size;i++){
+            int fire_c_row = fire_q.front().first;
+            int fire_c_col = fire_q.front().second;
+            fire_q.pop();
+            for(int j=0;j<4;j++){
+                int fire_n_row = fire_c_row + dir_x[j];
+                int fire_n_col = fire_c_col + dir_y[j];
+                if(fire_n_row>=0 && fire_n_row < h && fire_n_col >=0 && fire_n_col < w ){
+                    if(map[fire_n_row][fire_n_col] =='.' || map[fire_n_row][fire_n_col] == '@'){
+                        map[fire_n_row][fire_n_col] = '*';
+                        fire_q.push({fire_n_row,fire_n_col});
+                    }
+
                 } 
             }
         }
+
         
-        for(int i=0;i<4;i++){
-            int dx = x1+dir_x[i];
-            int dy = y1+dir_y[i];
-            if(dx>=0 && dx <= w && dy>=0 && dy < h && cnt[dx][dy]==0 && map[dx][dy] =='.'){
-                human_q.push({dx,dy});
-                cnt[dx][dy] = cnt[x1][y1]+1;
+        int human_q_size = human_q.size();
+        for(int i=0;i<human_q_size;i++){
+            int c_row = human_q.front().first;
+            int c_col = human_q.front().second;
+            human_q.pop();
+
+            if(c_row == 0 || c_row == h-1 || c_col == 0 || c_col == w-1){
+                return cnt[c_row][c_col];
+            }
+
+            for(int j=0;j<4;j++){
+                int n_row = c_row+ dir_x[j];
+                int n_col = c_col+ dir_y[j];
+                if(n_row>=0 && n_row < h && n_col >= 0 && n_col < w && cnt[n_row][n_col]==0 && map[n_row][n_col] =='.'){
+                   human_q.push({n_row,n_col});
+                   cnt[n_row][n_col] = cnt[c_row][c_col] + 1;
+                }
             }
         }
     }
+
+    return -1;
 }
 
 int main(){
     cin >> t;
     for(int i=0;i<t;i++){
+        init();
         cin >> w >> h;
         pair<int,int> pos;
         for(int j=0;j<h;j++){
             cin >> map[j];
             for(int k=0;k<w;k++){
                 if(map[j][k]=='@'){
-                    pos = {k,j};
+                    pos = {j,k};
                 }
                 if(map[j][k]=='*'){
-                    fire_q.push({k,j});
+                    fire_q.push({j,k});
                 }
             }
         }
-        bfs(pos.first, pos.second);
+        int result = bfs(pos.first, pos.second);
+        if(result == -1){
+            cout << "IMPOSSIBLE" << "\n";
+        }else{
+            cout << result << "\n"; 
+        }
     }
+
+    return 0;
     
 }
