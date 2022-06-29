@@ -1,73 +1,67 @@
 #include <iostream>
-#include <algorithm>
-#include <vector>
 #include <sstream>
-
+#include <stack>
 using namespace std;
 
-vector<int> stack_vec;
-vector<int> result;
-
-void stack_push(int num){
-    stack_vec.push_back(num);
-}
-
-void stack_pop(){
-    if(stack_vec.empty()){
-        result.push_back(-1);
-    }else{
-        result.push_back(stack_vec[stack_vec.size()-1]);
-        stack_vec.erase(stack_vec.end()-1);
-    }
-}
-
-void stack_size(){
-    result.push_back(stack_vec.size());
-}
-
-void stack_empty(){
-    if(stack_vec.empty()){
-        result.push_back(1);
-    }else{
-        result.push_back(0);
-    }
-}
-
-void stack_top(){
-    if(stack_vec.empty()){
-        result.push_back(-1);
-    }else {
-        result.push_back(stack_vec[stack_vec.size()-1]);
-    }    
-}
-
-
-
-int n;
+stack<char> left_side;
+stack<char> right_side;
 
 int main(){
-    cin >> n;
-    string temp;
-    getline(cin,temp);
-    for(int i=0;i<n;i++){
-        getline(cin,temp);
-        if(temp == "pop"){
-            stack_pop();
-        }else if(temp == "size"){
-            stack_size();
-        }else if(temp == "top"){
-            stack_top();
-        }else if(temp == "empty"){
-            stack_empty();
-        }else{
-            int num = stoi(temp.substr(4));
-            stack_push(num);
-        }
+    int n;
+    string str;
+    getline(cin,str);
+
+    for(int i=0;i<str.length();i++){
+        left_side.push(str[i]);
     }
 
-    for(int i=0;i<result.size();i++){
-        cout << result[i] << "\n";
+
+    cin >> n;
+    cin.ignore();
+
+    for(int i=0;i<n;i++){
+        string temp;
+        getline(cin,temp);
+        if(temp == "L"){
+            if(left_side.empty()){
+                continue;
+            }else{
+                char ch = left_side.top();
+                left_side.pop();
+                right_side.push(ch);
+            }
+        }else if(temp == "D"){
+            if(right_side.empty()){
+                continue;
+            }else{
+                char ch = right_side.top();
+                right_side.pop();
+                left_side.push(ch);    
+            }
+        }else if(temp == "B"){
+            if(left_side.empty()){
+                continue;
+            }else{
+                left_side.pop();
+            }
+        }else{
+            char ch;
+            stringstream ss;
+            ss.str(temp);
+            ss>> ch >> ch;
+            left_side.push(ch);
+        }
     }
+    while(!left_side.empty()){
+        char ch = left_side.top();
+        right_side.push(ch);
+        left_side.pop();
+    }
+    string result = "";
+    while(!right_side.empty()){
+        result.push_back(right_side.top());
+        right_side.pop();
+    }
+    cout << result;
     return 0;
-    
 }
