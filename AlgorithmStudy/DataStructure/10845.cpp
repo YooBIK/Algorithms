@@ -33,6 +33,10 @@ void queue_empty(){
     }
 }
 
+/**
+ * @brief 
+ * 
+ */
 void queue_front(){
     if(queue_vec.empty()){
         result.push_back(-1);
