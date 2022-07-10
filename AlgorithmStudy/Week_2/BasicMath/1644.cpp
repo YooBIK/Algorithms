@@ -19,26 +19,27 @@ void prime_num(){
             }
         }
     }
-    for(int i=0;i<=n;i++){
+    for(int i=2;i<=n;i++){
         if(arr[i]==0) p_num_vec.push_back(i);
     }
 }
 
 void sol(){
-    for(int i=1;i<=n;i++){
-        for(int j=0;j<=n-i+1;j++){
-            int sum = 0;
-            for(int k=0;k<i;k++){
-                sum += p_num_vec[k];
+
+    for(int i=0;i<p_num_vec.size();i++){
+        int sum=0;
+        for(int j=i;j<p_num_vec.size();j++){
+            sum += p_num_vec[j];
+            if(sum>n){
+                break;
             }
-            if(sum == n) cnt ++;
+            if(sum==n){
+                cnt++;
+                break;
+            }
         }
     }
 }
-
-
-
-
 
 int main(){
     cin >> n;
