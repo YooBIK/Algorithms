@@ -8,30 +8,35 @@ int n;
 string str;
 bool visit[81];
 vector<string> result;
+bool flag = false;
 
 bool is_possible(int x){
     string temp = str;
-    string checker; 
-    bool flag = true;
-    checker.push_back(x+'0');
-    
+    temp.push_back(x+'0');
+
+    for(int i=1;i<=temp.length()/2;i++){
+        if(temp.substr(temp.size()-i) == temp.substr(temp.size()-i-i, i)){
+            return false;
+        }
+    }
+    return true;
 }
 
 void dfs(int num){
     if(num==n){
-        result.push_back(str);
+        cout << str;
+        flag = true;
         return ;
     }
 
     for(int i=1;i<=3;i++){
-        if(!visit[num]){
-            if(is_possible(i)){
-                visit[num] = true;
-                str.push_back(i+'0');
-                dfs(num+1);
-                visit[num] = false;
-                str.pop_back();
-            }
+        if(flag) return ;
+        if(!visit[num] && is_possible(i)){
+            visit[num] = true;
+            str.push_back(i+'0');
+            dfs(num+1);
+            visit[num] = false;
+            str.pop_back();
         }
     }
 
@@ -40,13 +45,7 @@ void dfs(int num){
 int main(){
     cin >> n;
     dfs(0);
-    for(int i=0;i<result.size();i++){
-        for(int j=0;j<result[i].size();j++){
-            cout << result[i][j] << " ";
-        }
-        cout << "\n";
-    }
-
+    cout << str;
 
     return 0;
 }
