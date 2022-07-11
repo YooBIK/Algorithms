@@ -11,7 +11,6 @@ bool team[20];
 int result = 99999999;
 
 int carc(){
-
     int sum_team_true=0;
     int sum_team_false=0;
     for(int i=0;i<n;i++){

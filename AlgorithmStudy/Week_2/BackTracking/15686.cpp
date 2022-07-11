@@ -49,6 +49,7 @@ void dfs(int row,int col,int num){
     }
 }
 
+
 void init(){
     for(int i=0;i<51;i++){
         for(int j=0;j<51;j++){

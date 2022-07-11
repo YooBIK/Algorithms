@@ -21,33 +21,25 @@ void prime_num(){
     }
 }
 
-
 int main(){
+    std::cin.tie(NULL);
+    std::ios::sync_with_stdio(0);
     prime_num();
     while(1){
         cin >> n;
         if(n==0){
             break;
         }
-
-        for(int i=2;i<=n;i++){
-            if(arr[i]==0 && i%2==1){
-                vec.push_back(i);
-            }
-        }
-        bool flag = false;
-        for(int i=0;i<vec.size()-1;i++){
-            for(int j=vec.size()-1;j>i;j--){
-                if(vec[i]+vec[j] == n){
-                    flag = true;
-                    cout << n << " = " << vec[i] << " + " << vec[j] << "\n";  
-                    break;
-                }
-            }
-            if(flag) break;
-        }
         
+        bool flag=false;
+        for(int i=3;i*2<=n;i+=2){
+            if(!arr[i] && !arr[n-i]){
+                cout << n << " = " << i << " + " << n-i << "\n";
+                flag = true;
+                break;
+            }
+        }
         if(!flag) cout << "Goldbach's conjecture is wrong." << "\n";
-        vec.clear();
     }
+    return 0;
 }
