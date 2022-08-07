@@ -23,10 +23,7 @@ int main(){
     int num = 0;
     int result = 0;
     for(int i=0;i<ropes.size();i++){
-        if(result <= ropes[i] * (num + 1)){
-            result = ropes[i] * (num+1);
-            num++;
-        }
+        result = max(result, ropes[i]*(i+1));
     }
     cout << result;
 
