@@ -28,13 +28,12 @@ int main(){
                 sum += trees[i]-mid;
             }
         }
-        if(sum > m){
+        if(sum >= m){
             start = mid + 1;
-        }else if (sum < m){
-            end = mid -1;
-        }else{
             result = max(result,mid);
-            start = mid + 1;
+        }
+        else{
+            end = mid -1;
         }
     }
     cout << result;    
